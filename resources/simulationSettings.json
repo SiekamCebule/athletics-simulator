@@ -1,0 +1,18 @@
+{
+    "running":[
+    {
+        "distance": 60,
+        "maxResult:": 1.20,
+        "randEffect": 0.4,
+        "paceSkillEffect": 0.25,
+        "conditionSkillEffect": 0.04
+    },
+    {
+        "distance": 100,
+        "maxResult:": 2,
+        "randEffect": 0.55,
+        "paceSkillEffect": 0.3,
+        "conditionSkillEffect": 0.075
+    }
+    ]
+}
