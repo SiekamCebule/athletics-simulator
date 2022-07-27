@@ -55,24 +55,30 @@ void App::loadRunningAthletes()
     QByteArray jsonData = file.readAll();
     file.close();
 
-    QJsonDocument document = QJsonDocument::fromJson(jsonData);
-    QJsonObject object = document.object();
-    QJsonValue value = object.value("athletes");
-    QJsonArray array = value.toArray();
-
-    runningAthletes.clear();
-
-    for(const auto & v : array)
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(jsonData, &error);
+    if(error.error != QJsonParseError::NoError)
     {
-        RunningAthlete ath;
-        ath.setName(v.toObject().value("name").toString());
-        ath.setNationality(v.toObject().value("nationality").toString());
-        ath.setPaceSkill(v.toObject().value("paceSkill").toInt());
-        ath.setConditionSkill(v.toObject().value("conditionSkill").toInt());
-        runningAthletes.push_back(ath);
+        qDebug()<<"Blad przy wczytywaniu pliku resources/runningAthletes.json: "<<error.errorString()<<"\n";
+    }
+    else{
+        QJsonObject object = document.object();
+        QJsonValue value = object.value("athletes");
+        QJsonArray array = value.toArray();
+
+        runningAthletes.clear();
+
+        for(const auto & v : array)
+        {
+            RunningAthlete ath;
+            ath.setName(v.toObject().value("name").toString());
+            ath.setNationality(v.toObject().value("nationality").toString());
+            ath.setPaceSkill(v.toObject().value("paceSkill").toInt());
+            ath.setConditionSkill(v.toObject().value("conditionSkill").toInt());
+            runningAthletes.push_back(ath);
+        }
     }
 }
-
 void App::loadLongJumpAthletes()
 {
     QFile file("resources/longJumpAthletes.json");
@@ -80,21 +86,28 @@ void App::loadLongJumpAthletes()
     QByteArray jsonData = file.readAll();
     file.close();
 
-    QJsonDocument document = QJsonDocument::fromJson(jsonData);
-    QJsonObject object = document.object();
-    QJsonValue value = object.value("athletes");
-    QJsonArray array = value.toArray();
-
-    longJumpAthletes.clear();
-
-    for(const auto & v : array)
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(jsonData, &error);
+    if(error.error != QJsonParseError::NoError)
     {
-        LongJumpAthlete ath;
-        ath.setName(v.toObject().value("name").toString());
-        ath.setNationality(v.toObject().value("nationality").toString());
-        ath.setAccelarateSkill(v.toObject().value("accelarateSkill").toInt());
-        ath.setJumpSkill(v.toObject().value("jumpSkill").toInt());
-        longJumpAthletes.push_back(ath);
+        qDebug()<<"Blad przy wczytywaniu pliku resources/longJumpAthletes.json: "<<error.errorString()<<"\n";
+    }
+    else{
+        QJsonObject object = document.object();
+        QJsonValue value = object.value("athletes");
+        QJsonArray array = value.toArray();
+
+        longJumpAthletes.clear();
+
+        for(const auto & v : array)
+        {
+            LongJumpAthlete ath;
+            ath.setName(v.toObject().value("name").toString());
+            ath.setNationality(v.toObject().value("nationality").toString());
+            ath.setAccelarateSkill(v.toObject().value("accelarateSkill").toInt());
+            ath.setJumpSkill(v.toObject().value("jumpSkill").toInt());
+            longJumpAthletes.push_back(ath);
+        }
     }
 }
 
@@ -105,30 +118,37 @@ void App::loadSimulationSettings()
     QByteArray jsonData = file.readAll();
     file.close();
 
-    QJsonDocument document = QJsonDocument::fromJson(jsonData);
-    QJsonObject object = document.object();
-
-    //Running
-    runningSettings.clear();
-    QJsonValue value = object.value("Running");
-    QJsonArray array = value.toArray();
-    for(const QJsonValue & v : array)
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(jsonData, &error);
+    if(error.error != QJsonParseError::NoError)
     {
-        RunningSimulationSettings sett;
-        sett.setDistance(v.toObject().value("distance").toInt());
-        sett.setMinResult(v.toObject().value("minResult").toDouble());
-        sett.setRandEffect(v.toObject().value("randEffect").toDouble());
-        sett.setPaceSkillEffect(v.toObject().value("paceSkillEffect").toDouble());
-        sett.setConditionSkillEffect(v.toObject().value("conditionSkillEffect").toDouble());
-        runningSettings.push_back(sett);
+        qDebug()<<"Blad przy wczytywaniu pliku resources/simulationSettings.json: "<<error.errorString()<<"\n";
     }
+    else{
+        QJsonObject object = document.object();
 
-    //LongJump
-    value = object.value("LongJump");
-    longJumpSimulationSettings.setMinResult(value.toObject().value("minResult").toDouble());
-    longJumpSimulationSettings.setRandEffect(value.toObject().value("randEffect").toDouble());
-    longJumpSimulationSettings.setAccelarateSkillEffect(value.toObject().value("accelarateSkillEffect").toDouble());
-    longJumpSimulationSettings.setJumpSkillEffect(value.toObject().value("jumpSkillEffect").toDouble());
+        //Running
+        runningSettings.clear();
+        QJsonValue value = object.value("Running");
+        QJsonArray array = value.toArray();
+        for(const QJsonValue & v : array)
+        {
+            RunningSimulationSettings sett;
+            sett.setDistance(v.toObject().value("distance").toInt());
+            sett.setMinResult(v.toObject().value("minResult").toDouble());
+            sett.setRandEffect(v.toObject().value("randEffect").toDouble());
+            sett.setPaceSkillEffect(v.toObject().value("paceSkillEffect").toDouble());
+            sett.setConditionSkillEffect(v.toObject().value("conditionSkillEffect").toDouble());
+            runningSettings.push_back(sett);
+        }
+
+        //LongJump
+        value = object.value("LongJump");
+        longJumpSimulationSettings.setMinResult(value.toObject().value("minResult").toDouble());
+        longJumpSimulationSettings.setRandEffect(value.toObject().value("randEffect").toDouble());
+        longJumpSimulationSettings.setAccelarateSkillEffect(value.toObject().value("accelarateSkillEffect").toDouble());
+        longJumpSimulationSettings.setJumpSkillEffect(value.toObject().value("jumpSkillEffect").toDouble());
+    }
 }
 
 void App::simulateCompetitionChoice()
