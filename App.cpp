@@ -15,8 +15,6 @@
 #include <iostream>
 #include <conio.h>
 
-QTextStream out(stdout);
-
 App::App()
 {
 
@@ -62,6 +60,8 @@ void App::loadRunningAthletes()
     QJsonValue value = object.value("athletes");
     QJsonArray array = value.toArray();
 
+    runningAthletes.clear();
+
     for(const auto & v : array)
     {
         RunningAthlete ath;
@@ -70,7 +70,6 @@ void App::loadRunningAthletes()
         ath.setPaceSkill(v.toObject().value("paceSkill").toInt());
         ath.setConditionSkill(v.toObject().value("conditionSkill").toInt());
         runningAthletes.push_back(ath);
-
     }
 }
 
@@ -85,6 +84,8 @@ void App::loadLongJumpAthletes()
     QJsonObject object = document.object();
     QJsonValue value = object.value("athletes");
     QJsonArray array = value.toArray();
+
+    longJumpAthletes.clear();
 
     for(const auto & v : array)
     {
@@ -108,6 +109,7 @@ void App::loadSimulationSettings()
     QJsonObject object = document.object();
 
     //Running
+    runningSettings.clear();
     QJsonValue value = object.value("Running");
     QJsonArray array = value.toArray();
     for(const QJsonValue & v : array)
@@ -142,6 +144,7 @@ void App::simulateCompetitionChoice()
 
     Competition competition;
     QVector<Athlete *> athletes;
+    athletes.clear();
 
     switch(ch)
     {
