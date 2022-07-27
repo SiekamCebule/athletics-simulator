@@ -30,6 +30,7 @@ void App::start()
     while(true){
         loadSimulationSettings();
         loadRunningAthletes();
+        loadLongJumpAthletes();
 
         int ch = 0;
         cout<<"Witaj w symulatorze lekkoatletyki! Co chcesz zrobic?\n";
@@ -73,6 +74,29 @@ void App::loadRunningAthletes()
     }
 }
 
+void App::loadLongJumpAthletes()
+{
+    QFile file("resources/longJumpAthletes.json");
+    file.open(QFile::ReadOnly | QFile::Text);
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument document = QJsonDocument::fromJson(jsonData);
+    QJsonObject object = document.object();
+    QJsonValue value = object.value("athletes");
+    QJsonArray array = value.toArray();
+
+    for(const auto & v : array)
+    {
+        LongJumpAthlete ath;
+        ath.setName(v.toObject().value("name").toString());
+        ath.setNationality(v.toObject().value("nationality").toString());
+        ath.setAccelarateSkill(v.toObject().value("accelarateSkill").toInt());
+        ath.setJumpSkill(v.toObject().value("jumpSkill").toInt());
+        longJumpAthletes.push_back(ath);
+    }
+}
+
 void App::loadSimulationSettings()
 {
     QFile file("resources/simulationSettings.json");
@@ -83,19 +107,26 @@ void App::loadSimulationSettings()
     QJsonDocument document = QJsonDocument::fromJson(jsonData);
     QJsonObject object = document.object();
 
-    //running
-    QJsonValue value = object.value("running");
+    //Running
+    QJsonValue value = object.value("Running");
     QJsonArray array = value.toArray();
     for(const QJsonValue & v : array)
     {
         RunningSimulationSettings sett;
         sett.setDistance(v.toObject().value("distance").toInt());
-        sett.setMaxResult(v.toObject().value("maxResult").toDouble());
+        sett.setMinResult(v.toObject().value("minResult").toDouble());
         sett.setRandEffect(v.toObject().value("randEffect").toDouble());
         sett.setPaceSkillEffect(v.toObject().value("paceSkillEffect").toDouble());
         sett.setConditionSkillEffect(v.toObject().value("conditionSkillEffect").toDouble());
         runningSettings.push_back(sett);
     }
+
+    //LongJump
+    value = object.value("LongJump");
+    longJumpSimulationSettings.setMinResult(value.toObject().value("minResult").toDouble());
+    longJumpSimulationSettings.setRandEffect(value.toObject().value("randEffect").toDouble());
+    longJumpSimulationSettings.setAccelarateSkillEffect(value.toObject().value("accelarateSkillEffect").toDouble());
+    longJumpSimulationSettings.setJumpSkillEffect(value.toObject().value("jumpSkillEffect").toDouble());
 }
 
 void App::simulateCompetitionChoice()
@@ -105,7 +136,8 @@ void App::simulateCompetitionChoice()
     int ch;
     system("cls");
     cout<<"Wybierz dyscypline:\n";
-    cout<<"1. Biegi\n";
+    cout<<"1. Biegi\n"
+       <<"2. Skok w dal\n";
     std::cin >> ch;
 
     Competition competition;
@@ -113,7 +145,7 @@ void App::simulateCompetitionChoice()
 
     switch(ch)
     {
-    case 1:
+    case 1:{
         cout<<"\nJaki dystans biegow?\n";
         int i = 1;
         for(const auto & runset : runningSettings)
@@ -127,6 +159,18 @@ void App::simulateCompetitionChoice()
             athletes.push_back(&run);
         }
         competition.setCompetitionType(Competition::Running);
+        break;
+    }
+    case 2:{
+        for(auto & lon : longJumpAthletes)
+        {
+            lon.setSettings(&longJumpSimulationSettings);
+            athletes.push_back(&lon);
+        }
+        competition.setCompetitionType(Competition::LongJump);
+        break;
+    }
+    default:
         break;
     }
     competition.setAthletes(athletes);

@@ -1,13 +1,13 @@
 #include "SimulationSettings.h"
 
-double SimulationSettings::getMaxResult() const
+double SimulationSettings::getMinResult() const
 {
-    return maxResult;
+    return minResult;
 }
 
-void SimulationSettings::setMaxResult(double newMaxResult)
+void SimulationSettings::setMinResult(double newMinResult)
 {
-    maxResult = newMaxResult;
+    minResult = newMinResult;
 }
 
 double SimulationSettings::getRandEffect() const
@@ -20,6 +20,6 @@ void SimulationSettings::setRandEffect(double newRandEffect)
     randEffect = newRandEffect;
 }
 
-SimulationSettings::SimulationSettings(double maxResult, double randEffect) : maxResult(maxResult),
+SimulationSettings::SimulationSettings(double minResult, double randEffect) : minResult(minResult),
     randEffect(randEffect)
 {}

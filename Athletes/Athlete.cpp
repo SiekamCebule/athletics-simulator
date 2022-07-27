@@ -30,6 +30,13 @@ void Athlete::setResult(double newResult)
     result = newResult;
 }
 
+void Athlete::simulate()
+{
+    checkSkillLimits();
+    randomizeSkill();
+    calculateResult();
+}
+
 Athlete::Athlete(const QString &name, const QString &nationality) : name(name),
     nationality(nationality)
 {}

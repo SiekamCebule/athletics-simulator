@@ -23,13 +23,6 @@ void RunningAthlete::setConditionSkill(int newConditionSkill)
     conditionSkill = newConditionSkill;
 }
 
-void RunningAthlete::simulate()
-{
-    checkSkillLimits();
-    randomizeSkill();
-    calculateResult();
-}
-
 RunningSimulationSettings *RunningAthlete::getSettings() const
 {
     return settings;
@@ -58,17 +51,15 @@ void RunningAthlete::checkSkillLimits()
 void RunningAthlete::randomizeSkill()
 {
     paceSkill += Random::normalRandom(2, 3);
-
     conditionSkill += Random::randomInt(-2, 1);
 }
 
 void RunningAthlete::calculateResult()
 {
-    double rd = Random::normalRandom(0, settings->getRandEffect());
-    result = settings->getMaxResult();
+    result = settings->getMinResult();
     result -= (paceSkill * settings->getPaceSkillEffect());
     result -= (conditionSkill * settings->getConditionSkillEffect());
-    result -= rd;
+    result -= Random::normalRandom(0, settings->getRandEffect());
 }
 
 

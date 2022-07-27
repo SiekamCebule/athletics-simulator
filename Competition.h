@@ -21,7 +21,8 @@ public:
     void setAthletes(const QVector<Athlete *> &newAthletes);
 
     enum CompetitionType{
-        Running
+        Running,
+        LongJump
     };
 
     enum ResultType{

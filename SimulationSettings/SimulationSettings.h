@@ -3,12 +3,12 @@
 
 class SimulationSettings
 {
-    double maxResult, randEffect;
+    double minResult, randEffect;
 public:
-    SimulationSettings(double maxResult = 0, double randEffect = 0);
+    SimulationSettings(double minResult = 0, double randEffect = 0);
 
-    double getMaxResult() const;
-    void setMaxResult(double newMaxResult);
+    double getMinResult() const;
+    void setMinResult(double newMinResult);
     double getRandEffect() const;
     void setRandEffect(double newRandEffect);
 };

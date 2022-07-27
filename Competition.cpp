@@ -8,6 +8,7 @@
 #include <QDateTime>
 
 #include "Athletes/RunningAthlete.h"
+#include "Athletes/LongJumpAthlete.h"
 
 const QVector<Athlete *> &Competition::getAthletes() const
 {
@@ -42,6 +43,9 @@ void Competition::setResultType()
     case Running:
         resultType = Seconds;
         break;
+    case LongJump:
+        resultType = Meters;
+        break;
     }
 }
 
@@ -64,8 +68,10 @@ void Competition::startCompetition()
         switch(competitionType)
         {
         case Running:
-            dynamic_cast<RunningAthlete*>(ath)->simulate();
+            static_cast<RunningAthlete*>(ath)->simulate();
             break;
+        case LongJump:
+            static_cast<LongJumpAthlete*>(ath)->simulate();
         }
 
         QTime t = QTime(0,0,0).addMSecs(ath->getResult() * 1000);
@@ -82,7 +88,7 @@ void Competition::startCompetition()
             cout<<"\n";
             break;
         case Meters:
-            cout<<ath->getResult()<<" metrów\n";
+            cout<<ath->getResult()<<" metrow\n";
             break;
         }
         getch();

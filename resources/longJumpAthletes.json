@@ -1,0 +1,22 @@
+{
+"athletes":[
+{
+"name": "Krzysztof Stanowski",
+"nationality": "Polska",
+"accelarateSkill": 72,
+"jumpSkill": 74
+},
+{
+"name": "Lionel Messi",
+"nationality": "Polska",
+"accelarateSkill": 43,
+"jumpSkill": 102
+},
+{
+"name": "Kylian Mbappe",
+"nationality": "Bulgaria",
+"accelarateSkill": 89,
+"jumpSkill": 55
+}
+]
+}

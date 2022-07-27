@@ -23,6 +23,6 @@ public:
     double getResult() const;
     void setResult(double newResult);
 
-    virtual void simulate() = 0;
+    void simulate();
 };
 

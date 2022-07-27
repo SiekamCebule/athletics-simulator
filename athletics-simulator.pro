@@ -17,9 +17,11 @@ copies.path = $$OUT_PWD
 SOURCES += \
         App.cpp \
         Athletes/Athlete.cpp \
+        Athletes/LongJumpAthlete.cpp \
         Athletes/RunningAthlete.cpp \
         Competition.cpp \
         Random.cpp \
+        SimulationSettings/LongJumpSimulationSettings.cpp \
         SimulationSettings/RunningSimulationSettings.cpp \
         SimulationSettings/SimulationSettings.cpp \
         main.cpp
@@ -32,12 +34,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     App.h \
     Athletes/Athlete.h \
+    Athletes/LongJumpAthlete.h \
     Athletes/RunningAthlete.h \
     Competition.h \
     Random.h \
+    SimulationSettings/LongJumpSimulationSettings.h \
     SimulationSettings/RunningSimulationSettings.h \
     SimulationSettings/SimulationSettings.h
 
 DISTFILES += \
+    resources/longJumpAthletes.json \
     resources/runningAthletes.json \
     resources/simulationSettings.json
