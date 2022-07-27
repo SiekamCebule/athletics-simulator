@@ -18,6 +18,7 @@ SOURCES += \
         App.cpp \
         Athletes/Athlete.cpp \
         Athletes/RunningAthlete.cpp \
+        Competition.cpp \
         Random.cpp \
         SimulationSettings/RunningSimulationSettings.cpp \
         SimulationSettings/SimulationSettings.cpp \
@@ -32,9 +33,11 @@ HEADERS += \
     App.h \
     Athletes/Athlete.h \
     Athletes/RunningAthlete.h \
+    Competition.h \
     Random.h \
     SimulationSettings/RunningSimulationSettings.h \
     SimulationSettings/SimulationSettings.h
 
 DISTFILES += \
+    resources/runningAthletes.json \
     resources/simulationSettings.json

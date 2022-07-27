@@ -8,6 +8,10 @@ class Athlete
 
 protected:
     double result;
+    virtual void checkSkillLimits() = 0;
+    virtual void randomizeSkill() = 0;
+    virtual void calculateResult() = 0;
+
 public:
     Athlete(const QString &name = "", const QString &nationality = "");
 
@@ -18,5 +22,7 @@ public:
 
     double getResult() const;
     void setResult(double newResult);
+
+    virtual void simulate() = 0;
 };
 

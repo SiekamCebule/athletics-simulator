@@ -1,0 +1,22 @@
+{
+"athletes":[
+{
+"name": "Kamil Stoch",
+"nationality": "Polska",
+"paceSkill": 62,
+"conditionSkill": 43
+},
+{
+"name": "Mariusz Lewandowski",
+"nationality": "Polska",
+"paceSkill": 89,
+"conditionSkill": 67
+},
+{
+"name": "Vladimir Zografski",
+"nationality": "Bulgaria",
+"paceSkill": 66,
+"conditionSkill": 34
+}
+]
+}
