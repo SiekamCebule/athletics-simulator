@@ -9,6 +9,7 @@
 
 #include "Athletes/RunningAthlete.h"
 #include "Athletes/LongJumpAthlete.h"
+#include "Random.h"
 
 const QVector<Athlete *> &Competition::getAthletes() const
 {
@@ -75,20 +76,28 @@ void Competition::startCompetition()
         }
 
         QTime t = QTime(0,0,0).addMSecs(ath->getResult() * 1000);
-        cout<<ath->getName().toStdString()<<" ("<<ath->getNationality().toStdString()<<") ---> ";
+        ColorText::write(15, ath->getName().toStdString()+" ("+ath->getNationality().toStdString()+")");
+        cout<<" ---> ";
         switch(resultType)
         {
         case Seconds:
-            if(t.hour() > 0)
-                cout<<t.hour()<<"godz ";
-            if(t.minute() > 0)
-                cout<<t.minute()<<"min ";
-            if(t.second() > 0|| t.msec() > 0)
-                cout<<static_cast<double>(t.second() + ((double)t.msec() / 1000))<<"sek";
+            if(t.hour() > 0){
+                ColorText::write(11, QString::number(t.hour()).toStdString());
+                ColorText::write(6, " godz ");
+            }
+            if(t.minute() > 0){
+                ColorText::write(11, QString::number(t.minute()).toStdString());
+                ColorText::write(6, " min ");
+            }
+            if(t.second() > 0|| t.msec() > 0){
+                ColorText::write(11, QString::number(static_cast<double>((double)t.second() + ((double)t.msec() / 1000))).toStdString());
+                ColorText::write(6, " sek");
+            }
             cout<<"\n";
             break;
         case Meters:
-            cout<<ath->getResult()<<" metrow\n";
+            ColorText::write(11, QString::number(ath->getResult()).toStdString());
+            ColorText::write(6, " metrow\n");
             break;
         }
         getch();

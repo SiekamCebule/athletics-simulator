@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Athletes/RunningAthlete.h"
 #include "Competition.h"
+#include "Random.h"
 
 #include <QDebug>
 #include <QFile>
@@ -31,7 +32,7 @@ void App::start()
         loadLongJumpAthletes();
 
         int ch = 0;
-        cout<<"Witaj w symulatorze lekkoatletyki! Co chcesz zrobic?\n";
+        ColorText::write(15, "Witaj w symulatorze lekkoatletyki! Co chcesz zrobic?\n");
         cout<<"1. Symuluj zawody\n2. Zawodnicy\n3. Ustawienia\n";
         std::cin >> ch;
         switch(ch)
@@ -157,7 +158,7 @@ void App::simulateCompetitionChoice()
 
     int ch;
     system("cls");
-    cout<<"Wybierz dyscypline:\n";
+    ColorText::write(15, "Wybierz dyscypline\n");
     cout<<"1. Biegi\n"
        <<"2. Skok w dal\n";
     std::cin >> ch;
@@ -169,7 +170,7 @@ void App::simulateCompetitionChoice()
     switch(ch)
     {
     case 1:{
-        cout<<"\nJaki dystans biegow?\n";
+        ColorText::write(15, "\nJaki dystans biegow:\n");
         int i = 1;
         for(const auto & runset : runningSettings)
         {
@@ -198,7 +199,7 @@ void App::simulateCompetitionChoice()
     }
     competition.setAthletes(athletes);
 
-    cout<<"\nZawodnicy:\n";
+    ColorText::write(15, "Zawodnicy:\n");
     int i =1;
     for(const auto & ath : athletes)
     {

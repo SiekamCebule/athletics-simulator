@@ -1,9 +1,6 @@
 #include "Random.h"
-
-Random::Random()
-{
-
-}
+#include <iostream>
+#include <windows.h>
 
 int Random::randomInt(int min, int max)
 {
@@ -48,4 +45,27 @@ double Random::normalRandom(double mid, double a)
     }
 
     return rd[nr];
+}
+
+void ColorText::write(unsigned short color, std::string text)
+{
+    HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hcon, color);
+    std::cout << text;
+    SetConsoleTextAttribute(hcon, 7);
+}
+
+void ColorText::write(unsigned short color, double text)
+{
+    HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hcon, color);
+    std::cout << text;
+    SetConsoleTextAttribute(hcon, 7);
+}
+void ColorText::write(unsigned short color, int text)
+{
+    HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hcon, color);
+    std::cout << text;
+    SetConsoleTextAttribute(hcon, 7);
 }
