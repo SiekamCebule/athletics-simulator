@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <conio.h>
+#include <algorithm>
 
 #include <Windows.h>
 #include <QTime>
@@ -35,6 +36,55 @@ void Competition::setCompetitionType(int newCompetitionType)
 int Competition::getResultType() const
 {
     return resultType;
+}
+
+void Competition::showClassification()
+{
+    using std::cout;
+    if(competitionType != Running)
+        std::sort(results.begin(), results.end(), [](Athlete * left, Athlete * right){return left->getResult() > right->getResult();});
+    else
+        std::sort(results.begin(), results.end(), [](Athlete * left, Athlete * right){return left->getResult() < right->getResult();});
+
+    int i = 1;
+    ColorText::write(8, "Klasyfikacja:\n");
+    for(auto res : results)
+    {
+        ColorText::write(6, i);
+        cout<<". ";
+        ColorText::write(15, res->getName().toStdString()+" ("+res->getNationality().toStdString()+")");
+        cout<<" ---> ";
+
+        QTime t = QTime(0,0,0).addMSecs(res->getResult() * 1000);
+        switch(resultType)
+        {
+        case Seconds:
+            if (t.hour() > 0){
+                ColorText::write(11, QString::number(t.hour()).toStdString());
+                ColorText::write(6, " godz ");
+            }
+            if(t.minute() > 0){
+                ColorText::write(11, QString::number(t.minute()).toStdString());
+                ColorText::write(6, " min ");
+            }
+            if(t.second() > 0|| t.msec() > 0){
+                ColorText::write(11, QString::number(static_cast<double>((double)t.second() + ((double)t.msec() / 1000))).toStdString());
+                ColorText::write(6, " sek");
+            }
+            cout<<"\n";
+            break;
+        case Meters:
+            ColorText::write(11, QString::number(res->getResult()).toStdString());
+            ColorText::write(6, " metrow\n");
+            break;
+        }
+        i++;
+    }
+}
+
+void Competition::competitionSummary()
+{
+
 }
 
 void Competition::setResultType()
@@ -100,6 +150,10 @@ void Competition::startCompetition()
             ColorText::write(6, " metrow\n");
             break;
         }
+        results.push_back(ath);
+
+        cout<<"\n\n";
+        showClassification();
         getch();
         system("cls");
     }

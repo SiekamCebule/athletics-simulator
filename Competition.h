@@ -8,8 +8,12 @@
 class Competition
 {
     QVector<Athlete *> athletes;
-    int competitionType, resultType;
+    QVector<Athlete *> results;
 
+    void showClassification();
+    void competitionSummary();
+
+    int competitionType, resultType;
     void setResultType();
 public:
     Competition();
