@@ -10,6 +10,7 @@
 
 #include "Athletes/RunningAthlete.h"
 #include "Athletes/LongJumpAthlete.h"
+#include "Athletes/ThrowAthlete.h"
 #include "Random.h"
 
 const QVector<Athlete *> &Competition::getAthletes() const
@@ -101,6 +102,7 @@ void Competition::setResultType()
         break;
     case LongJump:
     case TripleJump:
+    case HammerThrow:
         resultType = Meters;
         break;
     }
@@ -118,6 +120,7 @@ Competition::Competition(const QVector<Athlete *> &athletes, int competitionType
 
 void Competition::startCompetition()
 {
+    std::cout<<athletes.size()<<"\n";
     using std::cout;
     system("cls");
     bool skipResults = false;
@@ -131,6 +134,9 @@ void Competition::startCompetition()
         case LongJump:
         case TripleJump:
             static_cast<LongJumpAthlete*>(ath)->simulate();
+            break;
+        case HammerThrow:
+            static_cast<ThrowAthlete*>(ath)->simulate();
             break;
         }
         results.push_back(ath);

@@ -1,30 +1,36 @@
 {
-    "Running":[
-    {
-        "distance": 60,
-        "minResult": 14,
-        "randEffect": 0.3,
-        "paceSkillEffect": 0.07,
-        "conditionSkillEffect": 0.008
-    },
-    {
-        "distance": 100,
-        "minResult": 20,
-        "randEffect": 0.46,
-        "paceSkillEffect": 0.11,
-        "conditionSkillEffect": 0.020
-    }
-    ],
-    "LongJump":{
-        "minResult": 0,
-        "randEffect": 0.17,
-        "accelarateSkillEffect": 0.037,
-        "jumpSkillEffect": 0.045
-    },
-    "TripleJump":{
-        "minResult": 0,
-        "randEffect": 0.21,
-        "accelarateSkillEffect": 0.036,
-        "jumpSkillEffect": 0.048
-    }
+"Running":[
+{
+"distance": 60,
+"minResult": 14,
+"randEffect": 0.3,
+"paceSkillEffect": 0.07,
+"conditionSkillEffect": 0.008
+},
+{
+"distance": 100,
+"minResult": 20,
+"randEffect": 0.46,
+"paceSkillEffect": 0.11,
+"conditionSkillEffect": 0.020
+}
+],
+"LongJump":{
+"minResult": 0,
+"randEffect": 0.17,
+"accelarateSkillEffect": 0.037,
+"jumpSkillEffect": 0.045
+},
+"TripleJump":{
+"minResult": 0,
+"randEffect": 0.21,
+"accelarateSkillEffect": 0.036,
+"jumpSkillEffect": 0.048
+},
+"HammerThrow":{
+"minResult": 0,
+"randEffect": 0.76,
+"strengthSkillSkill": 0.098,
+"techniqueSkillEffect": 0.13
+}
 }

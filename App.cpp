@@ -30,6 +30,8 @@ void App::start()
         loadSimulationSettings();
         loadRunningAthletes();
         loadLongJumpAthletes();
+        loadTripleJumpAthletes();
+        loadHammerThrowAthletes();
 
         int ch = 0;
         ColorText::write(15, "Witaj w symulatorze lekkoatletyki! Co chcesz zrobic?\n");
@@ -112,6 +114,70 @@ void App::loadLongJumpAthletes()
     }
 }
 
+void App::loadTripleJumpAthletes()
+{
+    QFile file("resources/tripleJumpAthletes.json");
+    file.open(QFile::ReadOnly | QFile::Text);
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(jsonData, &error);
+    if(error.error != QJsonParseError::NoError)
+    {
+        qDebug()<<"Blad przy wczytywaniu pliku resources/tripleJumpAthletes.json: "<<error.errorString()<<"\n";
+    }
+    else{
+        QJsonObject object = document.object();
+        QJsonValue value = object.value("athletes");
+        QJsonArray array = value.toArray();
+
+        tripleJumpAthletes.clear();
+
+        for(const auto & v : array)
+        {
+            LongJumpAthlete ath;
+            ath.setName(v.toObject().value("name").toString());
+            ath.setNationality(v.toObject().value("nationality").toString());
+            ath.setAccelarateSkill(v.toObject().value("accelarateSkill").toInt());
+            ath.setJumpSkill(v.toObject().value("jumpSkill").toInt());
+            tripleJumpAthletes.push_back(ath);
+        }
+    }
+}
+
+void App::loadHammerThrowAthletes()
+{
+    QFile file("resources/hammerThrowAthletes.json");
+    file.open(QFile::ReadOnly | QFile::Text);
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(jsonData, &error);
+    if(error.error != QJsonParseError::NoError)
+    {
+        qDebug()<<"Blad przy wczytywaniu pliku resources/hammerThrowAthletes.json: "<<error.errorString()<<"\n";
+    }
+    else{
+        QJsonObject object = document.object();
+        QJsonValue value = object.value("athletes");
+        QJsonArray array = value.toArray();
+
+        hammerThrowAthletes.clear();
+
+        for(const auto & v : array)
+        {
+            ThrowAthlete ath;
+            ath.setName(v.toObject().value("name").toString());
+            ath.setNationality(v.toObject().value("nationality").toString());
+            ath.setStrengthSkill(v.toObject().value("strengthSkill").toInt());
+            ath.setTechniqueSkill(v.toObject().value("techniqueSkill").toInt());
+            hammerThrowAthletes.push_back(ath);
+        }
+    }
+}
+
 void App::loadSimulationSettings()
 {
     QFile file("resources/simulationSettings.json");
@@ -156,6 +222,13 @@ void App::loadSimulationSettings()
         tripleJumpSimulationSettings.setRandEffect(value.toObject().value("randEffect").toDouble());
         tripleJumpSimulationSettings.setAccelarateSkillEffect(value.toObject().value("accelarateSkillEffect").toDouble());
         tripleJumpSimulationSettings.setJumpSkillEffect(value.toObject().value("jumpSkillEffect").toDouble());
+
+        //TripleJump
+        value = object.value("HammerThrow");
+        hammerThrowSimulationSettings.setMinResult(value.toObject().value("minResult").toDouble());
+        hammerThrowSimulationSettings.setRandEffect(value.toObject().value("randEffect").toDouble());
+        hammerThrowSimulationSettings.setStrengthSkillEffect(value.toObject().value("strengthSkillEffect").toDouble());
+        hammerThrowSimulationSettings.setTechniqueSkillEffect(value.toObject().value("techniqueSkillEffect").toDouble());
     }
 }
 
@@ -167,7 +240,8 @@ void App::simulateCompetitionChoice()
     system("cls");
     ColorText::write(15, "Wybierz dyscypline\n");
     cout<<"1. Biegi\n"
-       <<"2. Skoki\n";
+       <<"2. Skoki\n"
+      <<"3. Rzuty\n";
     std::cin >> ch;
 
     Competition competition;
@@ -208,20 +282,37 @@ void App::simulateCompetitionChoice()
             break;
         case 2:
             competition.setCompetitionType(Competition::TripleJump);
-            for(auto & lon : longJumpAthletes)
+            for(auto & tri : tripleJumpAthletes)
             {
-                lon.setSettings(&tripleJumpSimulationSettings);
-                athletes.push_back(&lon);
+                tri.setSettings(&tripleJumpSimulationSettings);
+                athletes.push_back(&tri);
             }
             break;
         }
         break;
     }
-    default:
+    case 3:
+    {
+        ColorText::write(15, "\nJaki rodzaj rzutow:\n");
+        cout<<"1. Rzut mlotem\n";
+        std::cin>>ch;
+        switch(ch)
+        {
+        case 1:
+            competition.setCompetitionType(Competition::HammerThrow);
+            for(auto & ham : hammerThrowAthletes)
+            {
+                ham.setSettings(&hammerThrowSimulationSettings);
+                athletes.push_back(&ham);
+            }
+            break;
+        }
         break;
     }
-    competition.setAthletes(athletes);
+    }
 
+
+    competition.setAthletes(athletes);
     ColorText::write(15, "Zawodnicy:\n");
     int i =1;
     for(const auto & ath : athletes)
@@ -229,6 +320,7 @@ void App::simulateCompetitionChoice()
         cout<<i<<". "<<ath->getName().toStdString()<<" ("<<ath->getNationality().toStdString()<<")\n";
         i++;
     }
+
     getch();
     competition.startCompetition();
 }

@@ -1,0 +1,22 @@
+{
+"athletes":[
+{
+"name": "Krzysztof Stanowski",
+"nationality": "Polska",
+"strengthSkill": 99,
+"techniqueSkill": 71
+},
+{
+"name": "Lionel Messi",
+"nationality": "Polska",
+"strengthSkill": 43,
+"techniqueSkill": 119
+},
+{
+"name": "Kylian Mbappe",
+"nationality": "Bulgaria",
+"strengthSkill": 66,
+"techniqueSkill": 80
+}
+]
+}

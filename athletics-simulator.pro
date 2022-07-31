@@ -19,11 +19,13 @@ SOURCES += \
         Athletes/Athlete.cpp \
         Athletes/LongJumpAthlete.cpp \
         Athletes/RunningAthlete.cpp \
+        Athletes/ThrowAthlete.cpp \
         Competition.cpp \
         Random.cpp \
         SimulationSettings/LongJumpSimulationSettings.cpp \
         SimulationSettings/RunningSimulationSettings.cpp \
         SimulationSettings/SimulationSettings.cpp \
+        SimulationSettings/ThrowSimulationSettings.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -36,13 +38,17 @@ HEADERS += \
     Athletes/Athlete.h \
     Athletes/LongJumpAthlete.h \
     Athletes/RunningAthlete.h \
+    Athletes/ThrowAthlete.h \
     Competition.h \
     Random.h \
     SimulationSettings/LongJumpSimulationSettings.h \
     SimulationSettings/RunningSimulationSettings.h \
-    SimulationSettings/SimulationSettings.h
+    SimulationSettings/SimulationSettings.h \
+    SimulationSettings/ThrowSimulationSettings.h
 
 DISTFILES += \
+    resources/hammerThrowAthletes.json \
     resources/longJumpAthletes.json \
     resources/runningAthletes.json \
-    resources/simulationSettings.json
+    resources/simulationSettings.json \
+    resources/tripleJumpAthletes.json

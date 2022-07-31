@@ -50,7 +50,7 @@ void RunningAthlete::checkSkillLimits()
 
 void RunningAthlete::randomizeSkill()
 {
-    paceSkill += Random::normalRandom(2, 3);
+    paceSkill += Random::normalRandom(-2, 3);
     conditionSkill += Random::randomInt(-2, 1);
 }
 
