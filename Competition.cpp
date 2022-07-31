@@ -84,7 +84,12 @@ void Competition::showClassification()
 
 void Competition::competitionSummary()
 {
-
+    using std::cout;
+    cout<<"Koniec zawodow, najlepszy okazal sie "<<results[0]->getName().toStdString()<<" ("<<results[0]->getNationality().toStdString()<<")!\n\n";\
+    showClassification();
+    cout<<"Aby przejsc do menu, wcisnij dowolny przycisk.\n";
+    getch();
+    system("cls");
 }
 
 void Competition::setResultType()
@@ -115,7 +120,8 @@ void Competition::startCompetition()
 {
     using std::cout;
     system("cls");
-    for(const auto & ath : athletes)
+    bool skipResults = false;
+    for(const auto& ath : athletes)
     {
         switch(competitionType)
         {
@@ -127,37 +133,43 @@ void Competition::startCompetition()
             static_cast<LongJumpAthlete*>(ath)->simulate();
             break;
         }
-
-        QTime t = QTime(0,0,0).addMSecs(ath->getResult() * 1000);
-        ColorText::write(15, ath->getName().toStdString()+" ("+ath->getNationality().toStdString()+")");
-        cout<<" ---> ";
-        switch(resultType)
-        {
-        case Seconds:
-            if(t.hour() > 0){
-                ColorText::write(11, QString::number(t.hour()).toStdString());
-                ColorText::write(6, " godz ");
-            }
-            if(t.minute() > 0){
-                ColorText::write(11, QString::number(t.minute()).toStdString());
-                ColorText::write(6, " min ");
-            }
-            if(t.second() > 0|| t.msec() > 0){
-                ColorText::write(11, QString::number(static_cast<double>((double)t.second() + ((double)t.msec() / 1000))).toStdString());
-                ColorText::write(6, " sek");
-            }
-            cout<<"\n";
-            break;
-        case Meters:
-            ColorText::write(11, QString::number(ath->getResult()).toStdString());
-            ColorText::write(6, " metrow\n");
-            break;
-        }
         results.push_back(ath);
 
-        cout<<"\n\n";
-        showClassification();
-        getch();
+        if(!skipResults){
+            QTime t = QTime(0,0,0).addMSecs(ath->getResult() * 1000);
+            ColorText::write(15, ath->getName().toStdString()+" ("+ath->getNationality().toStdString()+")");
+            cout<<" ---> ";
+            switch(resultType)
+            {
+            case Seconds:
+                if(t.hour() > 0){
+                    ColorText::write(11, QString::number(t.hour()).toStdString());
+                    ColorText::write(6, " godz ");
+                }
+                if(t.minute() > 0){
+                    ColorText::write(11, QString::number(t.minute()).toStdString());
+                    ColorText::write(6, " min ");
+                }
+                if(t.second() > 0|| t.msec() > 0){
+                    ColorText::write(11, QString::number(static_cast<double>((double)t.second() + ((double)t.msec() / 1000))).toStdString());
+                    ColorText::write(6, " sek");
+                }
+                cout<<"\n";
+                break;
+            case Meters:
+                ColorText::write(11, QString::number(ath->getResult()).toStdString());
+                ColorText::write(6, " metrow\n");
+                break;
+            }
+            cout<<"\n\n";
+            showClassification();
+        }
+
+        if(!skipResults)
+            if(getch() == 's')
+                skipResults = true;
+
         system("cls");
     }
+    competitionSummary();
 }

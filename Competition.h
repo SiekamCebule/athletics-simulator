@@ -4,7 +4,6 @@
 
 #include <QVector>
 
-
 class Competition
 {
     QVector<Athlete *> athletes;
