@@ -26,7 +26,8 @@ public:
 
     enum CompetitionType{
         Running,
-        LongJump
+        LongJump,
+        TripleJump
     };
 
     enum ResultType{

@@ -20,5 +20,11 @@
         "randEffect": 0.17,
         "accelarateSkillEffect": 0.037,
         "jumpSkillEffect": 0.045
+    },
+    "TripleJump":{
+        "minResult": 0,
+        "randEffect": 0.21,
+        "accelarateSkillEffect": 0.036,
+        "jumpSkillEffect": 0.048
     }
 }

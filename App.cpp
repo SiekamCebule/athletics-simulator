@@ -149,6 +149,13 @@ void App::loadSimulationSettings()
         longJumpSimulationSettings.setRandEffect(value.toObject().value("randEffect").toDouble());
         longJumpSimulationSettings.setAccelarateSkillEffect(value.toObject().value("accelarateSkillEffect").toDouble());
         longJumpSimulationSettings.setJumpSkillEffect(value.toObject().value("jumpSkillEffect").toDouble());
+
+        //TripleJump
+        value = object.value("TripleJump");
+        tripleJumpSimulationSettings.setMinResult(value.toObject().value("minResult").toDouble());
+        tripleJumpSimulationSettings.setRandEffect(value.toObject().value("randEffect").toDouble());
+        tripleJumpSimulationSettings.setAccelarateSkillEffect(value.toObject().value("accelarateSkillEffect").toDouble());
+        tripleJumpSimulationSettings.setJumpSkillEffect(value.toObject().value("jumpSkillEffect").toDouble());
     }
 }
 
@@ -160,7 +167,7 @@ void App::simulateCompetitionChoice()
     system("cls");
     ColorText::write(15, "Wybierz dyscypline\n");
     cout<<"1. Biegi\n"
-       <<"2. Skok w dal\n";
+       <<"2. Skoki\n";
     std::cin >> ch;
 
     Competition competition;
@@ -186,12 +193,28 @@ void App::simulateCompetitionChoice()
         break;
     }
     case 2:{
-        for(auto & lon : longJumpAthletes)
+        ColorText::write(15, "\nJaki rodzaj skokow:\n");
+        cout<<"1. Skok w dal\n2. Trojskok\n";
+        std::cin>>ch;
+        switch(ch)
         {
-            lon.setSettings(&longJumpSimulationSettings);
-            athletes.push_back(&lon);
+        case 1:
+            competition.setCompetitionType(Competition::LongJump);
+            for(auto & lon : longJumpAthletes)
+            {
+                lon.setSettings(&longJumpSimulationSettings);
+                athletes.push_back(&lon);
+            }
+            break;
+        case 2:
+            competition.setCompetitionType(Competition::TripleJump);
+            for(auto & lon : longJumpAthletes)
+            {
+                lon.setSettings(&tripleJumpSimulationSettings);
+                athletes.push_back(&lon);
+            }
+            break;
         }
-        competition.setCompetitionType(Competition::LongJump);
         break;
     }
     default:

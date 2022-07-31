@@ -4,6 +4,7 @@
 
 class LongJumpSimulationSettings : public SimulationSettings
 {
+protected:
     double accelarateSkillEffect, jumpSkillEffect;
 public:
     LongJumpSimulationSettings();

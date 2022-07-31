@@ -15,6 +15,7 @@ class App
     //settings
     QVector<RunningSimulationSettings> runningSettings;
     LongJumpSimulationSettings longJumpSimulationSettings;
+    LongJumpSimulationSettings tripleJumpSimulationSettings;
 
     void loadRunningAthletes();
     void loadLongJumpAthletes();

@@ -95,6 +95,7 @@ void Competition::setResultType()
         resultType = Seconds;
         break;
     case LongJump:
+    case TripleJump:
         resultType = Meters;
         break;
     }
@@ -122,7 +123,9 @@ void Competition::startCompetition()
             static_cast<RunningAthlete*>(ath)->simulate();
             break;
         case LongJump:
+        case TripleJump:
             static_cast<LongJumpAthlete*>(ath)->simulate();
+            break;
         }
 
         QTime t = QTime(0,0,0).addMSecs(ath->getResult() * 1000);
